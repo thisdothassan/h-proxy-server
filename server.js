@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
@@ -12,7 +13,14 @@ app.use(express.json());
 // Authentication middleware
 const authenticate = (req, res, next) => {
   const apiKey = req.headers["h-api-key"];
-  const validApiKey = "GcqnbKebUK07UKcoWgd5XcOe0G3VwAjDjlsAoz7zfg0=";
+  const validApiKey = process.env.API_KEY;
+
+  if (!validApiKey) {
+    return res.status(500).json({
+      error: "Internal Server Error",
+      message: "API_KEY environment variable is not configured",
+    });
+  }
 
   if (!apiKey) {
     return res.status(401).json({

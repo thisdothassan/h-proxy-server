@@ -21,6 +21,18 @@ A simple Node.js API service that acts as a proxy to forward HTTP requests to ot
 npm install
 ```
 
+2. Create a `.env` file in the project root and set your API key:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set your API key:
+
+```
+API_KEY=GcqnbKebUK07UKcoWgd5XcOe0G3VwAjDjlsAoz7zfg0=
+```
+
 ## Usage
 
 ### Start the Server
@@ -35,6 +47,8 @@ The server will start on port 3000 by default. You can change the port by settin
 PORT=8080 npm start
 ```
 
+**Note:** The `API_KEY` environment variable must be set before starting the server.
+
 ### API Endpoint
 
 #### POST /proxy
@@ -43,10 +57,12 @@ Forward an HTTP request to another service.
 
 **Authentication:**
 
-All requests to the `/proxy` endpoint require authentication via the `h-api-key` header:
+All requests to the `/proxy` endpoint require authentication via the `h-api-key` header. The API key must match the value set in the `API_KEY` environment variable.
+
+Example header:
 
 ```
-h-api-key: *************=
+h-api-key: your-api-key-value
 ```
 
 If the header is missing or invalid, the server will return a `401 Unauthorized` response.
